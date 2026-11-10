@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的AI作品｜网页AI助手</title>
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui}
+        body{background:#f4f7fa;padding:20px;max-width:800px;margin:0 auto}
+        .container{background:white;border-radius:16px;padding:24px;box-shadow:0 4px 20px #00000010}
+        h1{font-size:24px;color:#222;margin-bottom:8px}
+        .desc{color:#666;margin-bottom:20px}
+        #chat-box{height:400px;overflow-y:auto;border:1px solid #e5e7eb;border-radius:12px;padding:16px;margin-bottom:16px}
+        .msg{margin:8px 0;padding:10px 14px;border-radius:10px;max-width:80%}
+        .user{background:#2563eb;color:white;margin-left:auto}
+        .ai{background:#f1f5f9;color:#111}
+        .input-area{display:flex;gap:10px}
+        #input{flex:1;padding:12px;border:1px solid #ddd;border-radius:8px;outline:none}
+        button{padding:12px 20px;background:#2563eb;color:white;border:none;border-radius:8px;cursor:pointer}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>网页AI助手 · AI作品演示</h1>
+        <p class="desc">AI大模型对话演示，输入问题即可和AI交互</p>
+        <div id="chat-box"></div>
+        <div class="input-area">
+            <input id="input" placeholder="在这里输入你的问题...">
+            <button onclick="sendMsg()">发送</button>
+        </div>
+    </div>
+
+<script>
+const chatBox = document.getElementById('chat-box');
+const input = document.getElementById('input');
+
+function addMsg(text, isUser){
+    const div = document.createElement('div');
+    div.className = `msg ${isUser?'user':'ai'}`;
+    div.innerText = text;
+    chatBox.appendChild(div);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+async function sendMsg(){
+    const text = input.value.trim();
+    if(!text) return;
+    addMsg(text,true);
+    input.value="";
+    addMsg("AI思考中...",false);
+
+    // 模拟AI回复，正式上线前可以替换为真实API
+    setTimeout(()=>{
+        chatBox.removeChild(chatBox.lastChild);
+        addMsg("这是演示回复：你刚才问的是「"+text+"」，接入API后这里会返回真实AI回答。",false);
+    },1200)
+}
+</script>
+</body>
+</html>
